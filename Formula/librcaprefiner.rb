@@ -11,9 +11,9 @@ class Librcaprefiner < Formula
   depends_on "gcc@15" => :build
 
   def install
-    system "sed", "-i", "-e", "'s/gcc/gcc-15/g'", "./MakefileConfig.in"
-    system "sed", "-i", "-e", "'s/g++/g++-15/g'", "./MakefileConfig.in"
-    system "sed", "-i", "-e", "'s/x86_64-linux//'", "./MakefileConfig.in"
+    system "sed", "-i", "-e", "s/gcc/gcc-15/g", "./MakefileConfig.in"
+    system "sed", "-i", "-e", "s/g++/g++-15/g", "./MakefileConfig.in"
+    system "sed", "-i", "-e", "s/x86_64-linux//", "./MakefileConfig.in"
     system "make"
     system "cp", "./lib/libRcapRefiner.a", "#{lib}/"
   end

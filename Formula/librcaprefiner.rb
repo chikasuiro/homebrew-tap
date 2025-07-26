@@ -2,10 +2,10 @@
 #                https://rubydoc.brew.sh/Formula
 # PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
 class Librcaprefiner < Formula
-  desc "REVOCAP_Refiner"
-  homepage "https://github.com/FrontISTR/REVOCAP_Refiner"
-  url "https://github.com/FrontISTR/REVOCAP_Refiner/archive/refs/tags/v1.1.04.tar.gz"
-  sha256 "a22e27f6a9ce5c8e79af28c062e597ae5d7cf6345a84ad3c52342b4c27946c15"
+  desc ""
+  homepage "https://github.com/chikasuiro/REVOCAP_Refiner"
+  url "https://github.com/chikasuiro/REVOCAP_Refiner/archive/refs/tags/v1.1.04.tar.gz"
+  sha256 "f0eca0631c0c3de48b0bf63406216303586cf6091e41cae2ecccc378cf0ab52b"
   license ""
 
   depends_on "gcc@15" => :build

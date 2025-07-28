@@ -8,11 +8,22 @@ class Librcaprefiner < Formula
   sha256 "f0eca0631c0c3de48b0bf63406216303586cf6091e41cae2ecccc378cf0ab52b"
   license ""
 
-  depends_on "gcc@15" => :build
+  depends_on "gcc" => :build
 
   def install
-    ENV["HOMEBREW_CC"] = Formula["gcc@15"].opt_bin/"gcc-15"
-    ENV["HOMEBREW_CXX"] = Formula["gcc@15"].opt_bin/"g++-15"
+    gcc_bin = Formula["gcc"].opt_bin
+    gcc_executables = Dir["#{gcc_bin}/gcc-*"].select do |f|
+      File.executable?(f) && f.match(/gcc-(\d+)$/)
+    end
+    if gcc_executables.any?
+      latest_gcc = gcc_executables.max_by { |f| f.match(/gcc-(\d+)$/)[1].to_i }
+      gcc_version = latest_gcc.match(/gcc-(\d+)$/)[1]
+      ENV["HOMEBREW_CC"] = latest_gcc
+      ENV["HOMEBREW_CXX"] = latest_gcc.gsub("gcc-", "g++-")
+    else
+      odie "No GCC executables found in #{gcc_bin}"
+    end
+
     system "sed", "-i", "-e", "s/x86_64-linux//", "./MakefileConfig.in"
     system "make"
     mkdir_p("#{lib}")

@@ -10,12 +10,12 @@ class Frontistr < Formula
   license "MIT"
 
   depends_on "cmake" => :build
-  depends_on "gcc" => :build
-  depends_on "open-mpi" => :build
-  depends_on "libomp" => :build
-  depends_on "metis" => :build
-  depends_on "openblas" => :build
-  depends_on "scalapack" => :build
+  depends_on "gcc"
+  depends_on "open-mpi"
+  depends_on "libomp"
+  depends_on "metis"
+  depends_on "openblas"
+  depends_on "scalapack"
 
   def install
     ENV["CC"] = Formula["open-mpi"].opt_bin/"mpicc"

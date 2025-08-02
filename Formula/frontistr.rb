@@ -1,6 +1,3 @@
-# Documentation: https://docs.brew.sh/Formula-Cookbook
-#                https://rubydoc.brew.sh/Formula
-# PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
 class Frontistr < Formula
   desc "Open-Source Large-Scale Parallel FEM Program for Nonlinear Structural Analysis"
   homepage "https://www.frontistr.com/"

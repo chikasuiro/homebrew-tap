@@ -8,19 +8,8 @@ class Librcaprefiner < Formula
   depends_on "gcc" => :build
 
   def install
-    gcc_bin = Formula["gcc"].opt_bin
-    gcc_executables = Dir["#{gcc_bin}/gcc-*"].select do |f|
-      File.executable?(f) && f.match(/gcc-(\d+)$/)
-    end
-    if gcc_executables.any?
-      latest_gcc = gcc_executables.max_by { |f| f.match(/gcc-(\d+)$/)[1].to_i }
-      gcc_version = latest_gcc.match(/gcc-(\d+)$/)[1]
-      ENV["HOMEBREW_CC"] = latest_gcc
-      ENV["HOMEBREW_CXX"] = latest_gcc.gsub("gcc-", "g++-")
-    else
-      odie "No GCC executables found in #{gcc_bin}"
-    end
-
+    ENV["HOMEBREW_CC"] = Formula["gcc"].opt_bin/"gcc-#{Formula["gcc"].version.major.to_s}"
+    ENV["HOMEBREW_CXX"] = Formula["gcc"].opt_bin/"g++-#{Formula["gcc"].version.major.to_s}"
     system "sed", "-i", "-e", "s/x86_64-linux//", "./MakefileConfig.in"
     system "make"
     mkdir_p("#{lib}")

@@ -15,20 +15,15 @@ class Frontistr < Formula
   depends_on "scalapack"
 
   def install
+    ENV["OMPI_CC"] = Formula["gcc"].opt_bin/"gcc-#{Formula["gcc"].version.major.to_s}"
+    ENV["OMPI_CXX"] = Formula["gcc"].opt_bin/"g++-#{Formula["gcc"].version.major.to_s}"
+    ENV["OMPI_FC"] = Formula["gcc"].opt_bin/"gfortran-#{Formula["gcc"].version.major.to_s}"
     ENV["CC"] = Formula["open-mpi"].opt_bin/"mpicc"
     ENV["CXX"] = Formula["open-mpi"].opt_bin/"mpicxx"
     ENV["FC"] = Formula["open-mpi"].opt_bin/"mpifort"
-    ENV["OpenMP_ROOT"] = Formula["libomp"].opt_prefix if OS.mac?
     ENV["CMAKE_PREFIX_PATH"] = Formula["openblas"].opt_prefix
 
-    args = []
-    if OS.mac?
-      args << "-DOpenMP_C_FLAGS=-Xpreprocessor -fopenmp -I#{Formula["libomp"].opt_include}"
-      args << "-DOpenMP_C_LIB_NAMES=omp"
-      args << "-DOpenMP_CXX_FLAGS=-Xpreprocessor -fopenmp -I#{Formula["libomp"].opt_include}"
-      args << "-DOpenMP_CXX_LIB_NAMES=omp"
-    end
-    args << "-DCMAKE_INSTALL_PREFIX=#{prefix}"
+    args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}"]
 
     system "cmake", "-S", ".", "-B", "build", *args
     system "cmake", "--build", "build", "--", "-j"

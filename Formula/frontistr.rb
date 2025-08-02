@@ -9,7 +9,6 @@ class Frontistr < Formula
   depends_on "cmake" => :build
   depends_on "gcc"
   depends_on "open-mpi"
-  depends_on "libomp"
   depends_on "metis"
   depends_on "openblas"
   depends_on "scalapack"

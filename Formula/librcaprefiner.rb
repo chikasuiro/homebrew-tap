@@ -5,7 +5,7 @@ class Librcaprefiner < Formula
   sha256 "f0eca0631c0c3de48b0bf63406216303586cf6091e41cae2ecccc378cf0ab52b"
   license ""
 
-  depends_on "gcc" => :build
+  depends_on "gcc"
 
   def install
     ENV["HOMEBREW_CC"] = Formula["gcc"].opt_bin/"gcc-#{Formula["gcc"].version.major.to_s}"
@@ -19,15 +19,26 @@ class Librcaprefiner < Formula
   end
 
   test do
-    # `test do` will create, run in and delete a temporary directory.
-    #
-    # This test will fail and we won't accept that! For Homebrew/homebrew-core
-    # this will need to be a test that verifies the functionality of the
-    # software. Run the test with `brew test librcaprefiner`. Options passed
-    # to `brew install` such as `--HEAD` also need to be provided to `brew test`.
-    #
-    # The installed folder is not in the path, so use the entire path to any
-    # executables being tested: `system bin/"program", "do", "something"`.
-    system "false"
+    (testpath/"test.c").write <<~C
+      #include <stdio.h>
+      #include <rcapRefiner.h>
+
+      int main() {
+        int n_elem = 1;
+        int etype_rcap = RCAP_HEXAHEDRON;
+        int elem_node_item[8] = {0, 1, 2, 3, 4, 5, 6, 7};
+        size_t n_elem_ref;
+
+        rcapGetVersion();
+        n_elem_ref = rcapRefineElement(n_elem, etype_rcap, elem_node_item, NULL);
+
+        printf("Number of refined elements: %zu\\n", n_elem_ref);
+        return 0;
+      }
+    C
+    ENV["CC"] = Formula["gcc"].opt_bin/"gcc-#{Formula["gcc"].version.major.to_s}"
+    flags = ["-I#{include}", "-L#{lib}", "-lRcapRefiner", "-lstdc++"]
+    system ENV.cc, "test.c", "-o", "test", *flags
+    system "./test"
   end
 end

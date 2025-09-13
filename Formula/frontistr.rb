@@ -1,9 +1,9 @@
 class Frontistr < Formula
   desc "Open-Source Large-Scale Parallel FEM Program for Nonlinear Structural Analysis"
   homepage "https://www.frontistr.com/"
-  url "https://gitlab.com/FrontISTR-Commons/FrontISTR/-/archive/master/FrontISTR-master.tar.gz"
-  version "5.7"
-  sha256 "01935a7548b6a16bc0f394dd6b3453c4e723f7d46a670455ec787409cd41b356"
+  url "https://gitlab.com/FrontISTR-Commons/FrontISTR/-/archive/v5.7.1/FrontISTR-v5.7.1.tar.gz"
+  version "5.7.1"
+  sha256 "5c6e5caf8eb79352b63bb8e23635caeb4729e6577edbfa1de32a8ab270261f22"
   license "MIT"
 
   depends_on "cmake" => :build

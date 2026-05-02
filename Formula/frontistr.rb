@@ -21,6 +21,7 @@ class Frontistr < Formula
     ENV["CXX"] = Formula["open-mpi"].opt_bin/"mpicxx"
     ENV["FC"] = Formula["open-mpi"].opt_bin/"mpifort"
     ENV["CMAKE_PREFIX_PATH"] = Formula["openblas"].opt_prefix
+    ENV.append "CFLAGS", "-Wno-error=incompatible-pointer-types"
 
     args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}"]
 

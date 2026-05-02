@@ -30,6 +30,43 @@ class Frontistr < Formula
   end
 
   test do
-    system "#{bin}/fistr1", "-v"
+    (testpath/"test.msh").write <<~EOS
+      !NODE
+       1, 0.0, 0.0, 0.0
+       2, 1.0, 0.0, 0.0
+       3, 1.0, 1.0, 0.0
+       4, 0.0, 1.0, 0.0
+       5, 0.0, 0.0, 1.0
+       6, 1.0, 0.0, 1.0
+       7, 1.0, 1.0, 1.0
+       8, 0.0, 1.0, 1.0
+      !ELEMENT, TYPE=361
+       1, 1, 2, 3, 4, 5, 6, 7, 8
+      !MATERIAL, NAME=M1
+      !ITEM=1, SUBITEM=2
+       210000.0, 0.3
+      !SECTION, TYPE=SOLID, EGRP=ALL, MATERIAL=M1
+      !END
+    EOS
+    (testpath/"test.cnt").write <<~EOS
+      !VERSION
+       5
+      !SOLUTION, TYPE=STATIC
+      !SOLVER, METHOD=CG, PRECOND=3
+      !BOUNDARY, GRPID=1
+       1, 1, 3
+       2, 1, 3
+       3, 1, 3
+      !CLOAD, GRPID=1
+       8, 3, 1000.0
+      !END
+    EOS
+    (testpath/"hecmw_ctrl.dat").write <<~EOS
+      !MESH, NAME=fstrMSH, TYPE=HECMW-ENTIRE
+       test.msh
+      !CONTROL, NAME=fstrCNT
+       test.cnt
+    EOS
+    system "#{bin}/fistr1"
   end
 end

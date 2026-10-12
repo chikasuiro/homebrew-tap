@@ -1,9 +1,9 @@
 class Frontistr < Formula
   desc "Open-Source Large-Scale Parallel FEM Program for Nonlinear Structural Analysis"
   homepage "https://www.frontistr.com/"
-  url "https://gitlab.com/FrontISTR-Commons/FrontISTR/-/archive/v5.9/FrontISTR-v5.9.tar.gz"
-  version "5.9"
-  sha256 "737bfd3a376559745826e6db0f9119faa5b70b2b9c14cad027791010a7933be5"
+  url "https://gitlab.com/FrontISTR-Commons/FrontISTR/-/archive/v6.0/FrontISTR-v6.0.tar.gz"
+  version "6.0"
+  sha256 "7b6ce7c79baebe3eda2b6eda8a9354e268075e98cdf5e23a758304d0ec41901b"
   license "MIT"
 
   depends_on "cmake" => :build
@@ -23,7 +23,6 @@ class Frontistr < Formula
     ENV["CXX"] = formula_opt_bin("open-mpi")/"mpicxx"
     ENV["FC"] = formula_opt_bin("open-mpi")/"mpifort"
     ENV.prepend_path "CMAKE_PREFIX_PATH", formula_opt_prefix("openblas")
-    ENV.append "CFLAGS", "-Wno-error=incompatible-pointer-types"
 
     args = [
       "-DCMAKE_INSTALL_PREFIX=#{prefix}",

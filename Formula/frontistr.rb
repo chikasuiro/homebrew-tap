@@ -16,12 +16,12 @@ class Frontistr < Formula
   depends_on "librcaprefiner"
 
   def install
-    ENV["OMPI_CC"] = Formula["gcc"].opt_bin/"gcc-#{Formula["gcc"].version.major.to_s}"
-    ENV["OMPI_CXX"] = Formula["gcc"].opt_bin/"g++-#{Formula["gcc"].version.major.to_s}"
-    ENV["OMPI_FC"] = Formula["gcc"].opt_bin/"gfortran-#{Formula["gcc"].version.major.to_s}"
-    ENV["CC"] = Formula["open-mpi"].opt_bin/"mpicc"
-    ENV["CXX"] = Formula["open-mpi"].opt_bin/"mpicxx"
-    ENV["FC"] = Formula["open-mpi"].opt_bin/"mpifort"
+    ENV["OMPI_CC"] = formula_opt_bin("gcc")/"gcc-#{Formula["gcc"].version.major.to_s}"
+    ENV["OMPI_CXX"] = formula_opt_bin("gcc")/"g++-#{Formula["gcc"].version.major.to_s}"
+    ENV["OMPI_FC"] = formula_opt_bin("gcc")/"gfortran-#{Formula["gcc"].version.major.to_s}"
+    ENV["CC"] = formula_opt_bin("open-mpi")/"mpicc"
+    ENV["CXX"] = formula_opt_bin("open-mpi")/"mpicxx"
+    ENV["FC"] = formula_opt_bin("open-mpi")/"mpifort"
     ENV.prepend_path "CMAKE_PREFIX_PATH", formula_opt_prefix("openblas")
     ENV.append "CFLAGS", "-Wno-error=incompatible-pointer-types"
 

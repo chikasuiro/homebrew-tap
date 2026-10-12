@@ -23,11 +23,13 @@ class Frontistr < Formula
     ENV["CXX"] = Formula["open-mpi"].opt_bin/"mpicxx"
     ENV["FC"] = Formula["open-mpi"].opt_bin/"mpifort"
     ENV.prepend_path "CMAKE_PREFIX_PATH", formula_opt_prefix("openblas")
-    ENV.prepend_path "CMAKE_INCLUDE_PATH", formula_opt_include("librcaprefiner")
-    ENV.prepend_path "CMAKE_LIBRARY_PATH", formula_opt_lib("librcaprefiner")
     ENV.append "CFLAGS", "-Wno-error=incompatible-pointer-types"
 
-    args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}"]
+    args = [
+      "-DCMAKE_INSTALL_PREFIX=#{prefix}",
+      "-DCMAKE_INCLUDE_PATH=#{formula_opt_include("librcaprefiner")}",
+      "-DCMAKE_LIBRARY_PATH=#{formula_opt_lib("librcaprefiner")}",
+    ]
 
     system "cmake", "-S", ".", "-B", "build", *args
     system "cmake", "--build", "build", "--", "-j"

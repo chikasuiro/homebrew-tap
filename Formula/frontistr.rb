@@ -12,6 +12,8 @@ class Frontistr < Formula
   depends_on "metis"
   depends_on "openblas"
   depends_on "scalapack"
+  depends_on "netcdf"
+  depends_on "librcaprefiner"
 
   def install
     ENV["OMPI_CC"] = Formula["gcc"].opt_bin/"gcc-#{Formula["gcc"].version.major.to_s}"
@@ -20,7 +22,9 @@ class Frontistr < Formula
     ENV["CC"] = Formula["open-mpi"].opt_bin/"mpicc"
     ENV["CXX"] = Formula["open-mpi"].opt_bin/"mpicxx"
     ENV["FC"] = Formula["open-mpi"].opt_bin/"mpifort"
-    ENV["CMAKE_PREFIX_PATH"] = Formula["openblas"].opt_prefix
+    ENV.append "CMAKE_PREFIX_PATH", Formula["openblas"].opt_prefix
+    ENV.append "CMAKE_INCLUDE_PATH", Formula["librcaprefiner"].opt_include
+    ENV.append "CMAKE_LIBRARY_PATH", Formula["librcaprefiner"].opt_lib
     ENV.append "CFLAGS", "-Wno-error=incompatible-pointer-types"
 
     args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}"]

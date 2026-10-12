@@ -7,9 +7,11 @@ class Librcaprefiner < Formula
 
   depends_on "gcc"
 
+  fails_with :clang do
+    cause "Requires GNU C++ (libstdc++)"
+  end
+
   def install
-    ENV["HOMEBREW_CC"] = Formula["gcc"].opt_bin/"gcc-#{Formula["gcc"].version.major.to_s}"
-    ENV["HOMEBREW_CXX"] = Formula["gcc"].opt_bin/"g++-#{Formula["gcc"].version.major.to_s}"
     system "sed", "-i", "-e", "s/x86_64-linux//", "./MakefileConfig.in"
     system "make"
     mkdir_p("#{lib}")
